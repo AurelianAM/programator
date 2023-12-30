@@ -57,6 +57,11 @@ body {
     width: 100%;
 }
 
+.methodClass {
+    margin: 0;
+    padding: 0;
+}
+
 .nav-button {
     margin-right: 10px;
     padding: 5px;

@@ -138,6 +138,7 @@ function handleDrop(event) {
     draggedElement.draggable = false;
     draggedElement.classList.remove('draggable');
   }
+  saveButton.disabled = false;
 }
 
 
@@ -155,16 +156,38 @@ console.log("Am incarcat fisierul scheduler.js");
 // const printButton = document.getElementById('printButton');
 // printButton.addEventListener('click', () => printElement('table'));
 
+const saveButton = document.getElementById('saveButton');
+saveButton.display = 'visible';
+
+
 // add listener for modifying #end_date
 const dates = document.getElementById('dates');
 const startDateInput = document.getElementById('start-date');
 const endDateInput = document.getElementById('end-date');
-
+const dataToSaveInput = document.getElementById('dataToSave');
 
 endDateInput.addEventListener('input', function () {
     dates.submit();
     console.log("Submited " + dates)
 })
+
+
+
+saveButton.addEventListener('click', function () {
+  console.log('save button clicked');
+  var dataJSON = {};
+  const tdRows = document.getElementsByClassName('trRow');
+  for (let index = 0; index < tdRows.length; index++) {
+    let rand = tdRows[index];
+    let data = rand.children[0].innerHTML.trim();
+    let tura1 = rand.children[1].innerHTML.trim();
+    let tura2 = rand.children[2].innerHTML.trim();
+    let tura3 = rand.children[3].innerHTML.trim();
+    dataJSON[data] = [tura1, tura2, tura3];
+  }
+  dataToSaveInput.value = dataJSON;
+  // dataToSaveInput.submit();
+});
 
 updateAndFormat();
 

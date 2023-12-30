@@ -9,12 +9,14 @@
 {% block content %}
 <h1>Status: {{ status }}</h1>
 <div class="page-buttons">
-    <form action="" id="dates" method="post">
+    <form action="" id="dates" class="methodClass" method="post">
         {% csrf_token %}
         <input type="date" name="start" id="start-date" value="{{ startDate }}">
         <input type="date" name="end" id="end-date" value="{{ endDate }}">
         <!-- <button id="printButton" class="button" disabled>Print</button> -->
     </form>
+        <button id="saveButton" class="button" type="submit" disabled display="none">Save</button>
+        <input type="hidden" style="outline-style: none;" id="dataToSave" name="dataToSave" method="put">
 </div>
 
 <div id="root">
