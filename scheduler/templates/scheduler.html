@@ -1,0 +1,22 @@
+{% extends "home.html" %}
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+{% endblock styles %}
+
+
+{% block cardsSection %}
+    <section id="cardsSection">
+        {% for medic in medicList %}
+            <div id="medic{{ medic.id }}" class="medic card draggable" draggable="true"> {{ medic.nickname }} </div>
+        {% endfor %}
+    </section>
+{% endblock cardsSection %}
+
+
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'scheduler.js' %}"></script>
+{% endblock scripts %}

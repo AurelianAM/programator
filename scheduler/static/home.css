@@ -1,0 +1,95 @@
+body {
+    display: block;
+}
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* the contante ho be visible independently of the height */
+
+}
+
+#tableTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.titles {
+    padding: 10px;
+    font-size: 1.5rem;
+}
+
+#subTitle {
+    font-size: 1.25rem;
+    padding-bottom: 15px;
+}
+
+
+@media print {
+    body *{
+      margin: 0;
+      padding: 0;
+      visibility: hidden;
+    }
+    @page {
+      size: A4;
+      margin: 0;
+      align-items: center;
+      justify-content: baseline;
+      align-self: center;
+    }
+    /* Add additional styling for your content here */
+
+    .page-buttons {
+        display: none;
+    }
+
+    #root *{
+      /* Define styles for your content, e.g., font, margin, padding, etc. */
+      visibility: visible;
+    }
+
+
+    table * {
+        border: 1px solid black;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    td, th {
+        padding: 0.2rem 1rem;
+        min-width: 40mm;
+    }
+
+    th {
+        font-size: 1.25rem;
+        font-weight: bolder;
+        background-color: #fff;
+    }
+
+    td {
+        font-size: 1rem;
+    }
+
+    .weekend {
+        background-color: #c3c3c3;
+        font-weight: bold;
+    }
+
+    .thtura, .thtime {
+        border: none;
+    }
+    .thtura {
+        font-size: 1.25rem;
+    }
+    .thtime {
+        font-size: 1rem
+    }
+
+  }

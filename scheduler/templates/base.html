@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificare Garzi</title>
+    {% block styles %}
+    
+    {% endblock styles %}
+</head>
+<body>
+    <header id="menuBar" class="nav">
+        <div class="nav-container">
+            <div class="nav-button nav-logo">
+                <a href="{% url 'home' %}"><img class="nav-logo-img" src="../static/img/logo.png" alt="LOGO"></a>
+            </div>
+            <div class="nav-button">
+                <a class="nav-option" href="{% url 'home' %}">Home</a>
+            </div>
+            <div class="nav-button">
+                <a class="nav-option" href="{% url 'scheduler' %}">Scheduler</a>
+            </div>
+            <div class="nav-button">
+                <a class="nav-option" href="medici.html">Medici</a>
+            </div>
+            <div class="nav-button">
+                <a class="nav-option" href="login.html">Login</a>
+        </div>
+    </header>
+    
+    <div id="mainSection">{% block content %}{% endblock content %}</div>
+    
+    <footer id="footer">{% block footer %}{% endblock footer %}</footer>
+
+
+
+
+    {% block scripts %}
+    
+    {% endblock scripts %}
+
+</body>
+</html>

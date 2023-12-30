@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock styles %}
+
+{% block content %}
+<h1>Status: {{ status }}</h1>
+<div class="page-buttons">
+    <form action="" id="dates" method="post">
+        {% csrf_token %}
+        <input type="date" name="start" id="start-date" value="{{ startDate }}">
+        <input type="date" name="end" id="end-date" value="{{ endDate }}">
+        <!-- <button id="printButton" class="button" disabled>Print</button> -->
+    </form>
+</div>
+
+<div id="root">
+    <section id="tableSection">
+        {% block tableTitle %}
+        <div id="tableTitle">
+            <div id="mainTitle" class="titles">TABEL MEDICI</div>
+            <div id="subTitle" class="titles"><span id="month"></span> - <span id="year"></span></div>
+        </div>
+        {% endblock tableTitle %}
+        <table id="table" class="scheduler">
+            <tr id="rowTh">
+                <th id="thDate" class="thCell">Data</th>
+                <th id="thTura1" class="thCell"><div class="thtura">Tura 1</div><div class="thtime">08:00 - 20:00</div></th>
+                <th id="thTura2" class="thCell"><div class="thtura">Tura 2</div><div class="thtime">20:00 - 08:00</div></th>
+                <th id="thTura3" class="thCell">Elicopter</th>
+            </tr>
+            {% for key, record in scheduler.items %}
+                <tr id="row${day}" class="trRow">
+                    <td id="tdDate-{{ key }}" class="tdCellDate">{{ key }}</td>
+                    <td id="tdTura1-{{ key }}" class="tdCell" draggable="true">{{ record.tura1 }}</td>
+                    <td id="tdTura2-{{ key }}" class="tdCell" draggable="true">{{ record.tura2 }}</td>
+                    <td id="tdTura3-{{ key }}" class="tdCell" draggable="true">{{ record.tura3 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+
+    {% block cardsSection %}
+    
+    {% endblock cardsSection %}
+
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'home.js' %}"></script>
+{% endblock scripts %}
+
+
