@@ -15,8 +15,8 @@
         <input type="date" name="end" id="end-date" value="{{ endDate }}">
         <!-- <button id="printButton" class="button" disabled>Print</button> -->
     </form>
-        <button id="saveButton" class="button" type="submit" disabled display="none">Save</button>
-        <input type="hidden" style="outline-style: none;" id="dataToSave" name="dataToSave" method="put">
+        <button id="saveButton" class="button" on_click="saveDatafromTable()" type="submit" disabled display="none">Save</button>
+        <input type="hidden" style="outline-style: none;" id="dataToSave" name="dataToSave">
 </div>
 
 <div id="root">

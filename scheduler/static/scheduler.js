@@ -142,6 +142,21 @@ function handleDrop(event) {
 }
 
 
+function saveDatafromTable() {
+  const dataToSaveInput = document.getElementById('dataToSave');
+  console.log('save button clicked');
+  var dataJSON = {};
+  const tdRows = document.getElementsByClassName('trRow');
+  for (let index = 0; index < tdRows.length; index++) {
+    let rand = tdRows[index];
+    let data = rand.children[0].innerHTML.trim();
+    let tura1 = rand.children[1].innerHTML.trim();
+    let tura2 = rand.children[2].innerHTML.trim();
+    let tura3 = rand.children[3].innerHTML.trim();
+    dataJSON[data] = [tura1, tura2, tura3];
+  }
+  document.getElementById('dataToSave').value = dataJSON;
+}
 
 
 // // // // // MAIN PROGRAM // // // // //
@@ -164,7 +179,7 @@ saveButton.display = 'visible';
 const dates = document.getElementById('dates');
 const startDateInput = document.getElementById('start-date');
 const endDateInput = document.getElementById('end-date');
-const dataToSaveInput = document.getElementById('dataToSave');
+
 
 endDateInput.addEventListener('input', function () {
     dates.submit();
@@ -173,21 +188,7 @@ endDateInput.addEventListener('input', function () {
 
 
 
-saveButton.addEventListener('click', function () {
-  console.log('save button clicked');
-  var dataJSON = {};
-  const tdRows = document.getElementsByClassName('trRow');
-  for (let index = 0; index < tdRows.length; index++) {
-    let rand = tdRows[index];
-    let data = rand.children[0].innerHTML.trim();
-    let tura1 = rand.children[1].innerHTML.trim();
-    let tura2 = rand.children[2].innerHTML.trim();
-    let tura3 = rand.children[3].innerHTML.trim();
-    dataJSON[data] = [tura1, tura2, tura3];
-  }
-  dataToSaveInput.value = dataJSON;
-  // dataToSaveInput.submit();
-});
+
 
 updateAndFormat();
 

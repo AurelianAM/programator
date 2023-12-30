@@ -9,7 +9,7 @@ import calendar
 
 def homeView(request):
     context = {}
-    print(f"Metoda este: ->{request.method}<- ")
+    print(f"Metoda pe homeView este: ->{request.method}<- ")
     if request.method == "GET":
         context.update(handleDates(request))
 
@@ -20,7 +20,10 @@ def homeView(request):
 
 def schedulerView(request):
 
-    print(f"Request headers for {request.method}: ", request.headers)
+    if "dataToSave" in request.POST:
+        print("DataToSave: ", request.POST['dataToSave'])
+
+    print(f"Metoda pe schedulerView este: ->{request.method}<- ")
 
     context = {}
 
@@ -37,7 +40,6 @@ def schedulerView(request):
 def handleDates(request):
     startDate = f"{datetime.now().year}-{datetime.now().month}-{1:02d}"
     endDate = f"{datetime.now().year}-{datetime.now().month}-{calendar.monthrange(datetime.now().year, datetime.now().month)[1]:02d}"
-    print("Data de sfarsit: ", endDate)
     return {"status" : "ok GET - handle Dates", "startDate" : startDate, "endDate" : endDate}
 
 def handleScheduler(request):
@@ -69,5 +71,4 @@ def handleScheduler(request):
 
 def handleMedicCards(request):
     medicList = Medic.objects.all()
-    print('HandlerMedicCards method: ', request.method)
     return {"medicList": medicList}
