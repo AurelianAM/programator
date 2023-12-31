@@ -183,16 +183,7 @@ function saveButtonClicked(params) {
 
 // // // // // MAIN PROGRAM // // // // //
 
-console.log("Am incarcat fisierul scheduler.js");
-
-// add LISTENERS on buttons
-
-// const saveButton = document.getElementById('saveButton');
-// saveButton.addEventListener('click', saveButtonClicked);
-
-// const printButton = document.getElementById('printButton');
-// printButton.addEventListener('click', () => printElement('table'));
-
+// SAVE button management
 const saveButton = document.getElementById('saveButton');
 saveButton.display = 'visible';
 saveButton.addEventListener('click', saveButtonClicked);
@@ -205,12 +196,7 @@ const endDateInput = document.getElementById('end-date');
 
 endDateInput.addEventListener('input', function () {
     dates.submit();
-    console.log("Submited " + dates)
 })
-
-
-
-
 
 updateAndFormat();
 

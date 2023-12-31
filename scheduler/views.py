@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .models import Scheduler, Medic
 
 from datetime import datetime, timedelta
@@ -10,40 +11,35 @@ import json
 
 def homeView(request):
     context = {}
-    print(f"Metoda pe homeView este: ->{request.method}<- ")
     if request.method == "GET":
         context.update(handleDates(request))
-
     if request.method == "POST":
         context.update(handleScheduler(request))
-        
     return render(request, 'home.html', context=context)
 
 def schedulerView(request):
-
-    print(f"Metoda pe schedulerView este: ->{request.method}<- ")
-
     context = {}
-
     if request.method == "GET":
         context.update(handleDates(request))
-        context.update(handleMedicCards(request))
-
+        context.update(handleMedicList(request))
     if request.method == "POST":
-        print("Request POST: ")
         if request.headers.get('action') == 'save':
             saveScheduler(request)
-            return redirect('home')
+            return redirect('scheduler')
         else:
             context.update(handleScheduler(request))
-            context.update(handleMedicCards(request))
-    
+            context.update(handleMedicList(request))
     return render(request, "scheduler.html", context)
 
+def mediciView(request):
+    context = {}
+    if request.method == "GET":
+        context.update(handleMedicList(request))
+    return render(request, "medici.html", context=context)
+
+
 def saveScheduler(request):
-    print("SAVE SCHEDULER")
     decodedData = json.loads(request.body.decode("utf-8"))
-    print(decodedData)
     for element in decodedData:
         date = datetime.strptime(element, '%d-%m-%Y')
         tura1 = getMedic(decodedData[element][0])
@@ -51,9 +47,6 @@ def saveScheduler(request):
         tura3 = getMedic(decodedData[element][2])
         record = Scheduler(date=date, tura1=tura1, tura2=tura2, tura3=tura3)
         record.save()
-
-    print()
-
 def getMedic(nickname):
     try:
         return Medic.objects.get(nickname=nickname)
@@ -92,6 +85,6 @@ def handleScheduler(request):
     return {"scheduler" : scheduler, "status" : "ok POST - handle Scheduler", "startDate" : startDate, "endDate" : endDate}
 
 
-def handleMedicCards(request):
+def handleMedicList(request):
     medicList = Medic.objects.all()
     return {"medicList": medicList}

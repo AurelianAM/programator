@@ -1,0 +1,68 @@
+#root {
+    justify-content: left ;
+    margin-left: 1rem;
+    padding-left: 2rem;
+}
+
+.medici {
+    display: grid;
+    row-gap: 4rem;
+    grid-template-columns: 1fr;
+}
+
+.medicRecord {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+    row-gap: 4rem;
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    border-radius: 0.5rem;
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.medicRecord:hover {
+    background-color: #dddcdc;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+.grid-item {
+    margin-right: 2rem;
+    font-size: 1.2rem;
+}
+
+.round-button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    align-content: center;
+    justify-content: center;
+    background-color: inherit;   
+}
+.round-button:hover {
+    cursor: pointer;
+}
+
+
+.delete-button:hover {
+    transform: scale(1.5);
+    transition: all 0.3s ease;
+}
+
+.edit-button:hover {
+    transform: scale(1.5);
+    transition: all 0.3s ease;
+}
+
+.accept-button:hover {
+    transform: scale(1.5);
+    transition: all 0.3s ease;
+}
+
+.context-button-none {
+    display: none;
+}
