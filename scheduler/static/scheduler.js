@@ -38,20 +38,6 @@ function resetTableRows() {
   }
 }
 
-function saveButtonClicked() {
-  console.log('save button clicked');
-  var dataJSON = {};
-  const tdRows = document.getElementsByClassName('trRow');
-  for (let index = 0; index < tdRows.length; index++) {
-    let rand = tdRows[index];
-    let data = rand.children[0].innerHTML.replace(/\n/g, '').replace(/\s/g, '');
-    let tura1 = rand.children[1].innerHTML.replace(/\n/g, '');
-    let tura2 = rand.children[2].innerHTML.replace(/\n/g, '');
-    let tura3 = rand.children[3].innerHTML.replace(/\n/g, '');
-    dataJSON[data] = [tura1, tura2, tura3];
-  }
-  sendJSONtoServer('POST', dataJSON);
-}
 
 
 // DRAG AND DROP events
@@ -141,10 +127,35 @@ function handleDrop(event) {
   saveButton.disabled = false;
 }
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      let cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+// function saveDatafromTable(event, form) {
+//   event.preventDefault();
+//   console.log('save button clicked');
+  
+//   fetch (form.action, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(dataJSON),
+//   })
+//   form.submit();
+// }
 
-function saveDatafromTable() {
-  const dataToSaveInput = document.getElementById('dataToSave');
-  console.log('save button clicked');
+function saveButtonClicked(params) {
   var dataJSON = {};
   const tdRows = document.getElementsByClassName('trRow');
   for (let index = 0; index < tdRows.length; index++) {
@@ -155,7 +166,18 @@ function saveDatafromTable() {
     let tura3 = rand.children[3].innerHTML.trim();
     dataJSON[data] = [tura1, tura2, tura3];
   }
-  document.getElementById('dataToSave').value = dataJSON;
+  var data = JSON.stringify(dataJSON);
+  let csrftoken = getCookie('csrftoken');
+  let response = fetch("", {
+    method: 'POST',
+    body: data,
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+        "X-CSRFToken": [csrftoken],
+        "action" : "save",
+    },
+  });
 }
 
 
@@ -173,7 +195,7 @@ console.log("Am incarcat fisierul scheduler.js");
 
 const saveButton = document.getElementById('saveButton');
 saveButton.display = 'visible';
-
+saveButton.addEventListener('click', saveButtonClicked);
 
 // add listener for modifying #end_date
 const dates = document.getElementById('dates');
