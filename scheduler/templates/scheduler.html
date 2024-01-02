@@ -1,17 +1,21 @@
 {% extends "home.html" %}
 
-{% block styles %}
+{% comment %} {% block styles %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
-{% endblock styles %}
+{% endblock styles %} {% endcomment %}
 
+{% block tableTitle %}
+{% endblock tableTitle %}
 
 {% block cardsSection %}
-    <section id="cardsSection">
-        {% for medic in medicList %}
-            <div id="medic{{ medic.id }}" class="medic card draggable" draggable="true"> {{ medic.nickname }} </div>
-        {% endfor %}
-    </section>
+    <div class="col-sm-2 sticky-top">
+        <ul id="cardsSection" class="nav nav-pills nav-stacked">
+            {% for medic in medicList %}
+                <li id="medic{{ medic.id }}" class="col-12 bg-primary text-white btn btn-primary btn-sm mb-1 medic card draggable" draggable="true"> {{ medic.nickname }} </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock cardsSection %}
 
 

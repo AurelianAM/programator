@@ -35,8 +35,40 @@ def mediciView(request):
     context = {}
     if request.method == "GET":
         context.update(handleMedicList(request))
+    elif request.method == "POST":
+        if "modifiedNickname" in request.POST:
+            context.update(handleModifyMedic(request))
+        elif "newNickname" in request.POST:
+            context.update(handleAddNewMedic(request))
+        return redirect('medici')
     return render(request, "medici.html", context=context)
 
+def handleAddNewMedic(request):
+    newNickname = request.POST.get("newNickname")
+    newFirstName = request.POST.get("newFirstName")
+    newLastName = request.POST.get("newLastName")
+    newMedic = Medic(nickname=newNickname, firstName=newFirstName, lastName=newLastName)
+    try:
+        newMedic.save()
+        return {"status" : "Medic added successfully"}
+    except Medic.unique_error_message:
+        return {"status" : "Medic with provided nickname already exists"}
+
+def handleModifyMedic(request):
+    id = int(request.POST.get("actualMedicId"))
+    modifiedNickname = request.POST.get("modifiedNickname")
+    modifiedFirstName = request.POST.get("modifiedFirstName")
+    modifiedLastName = request.POST.get("modifiedLastName")
+
+    medic = Medic.objects.get(id=id)
+    try:
+        medic.nickname = modifiedNickname
+        medic.firstName = modifiedFirstName
+        medic.lastName = modifiedLastName
+        medic.save()
+        return {"status" : "Medic modified successfully"}
+    except Medic.unique_error_message:
+        return {"status" : "Medic with provided nickname already exists"}
 
 def saveScheduler(request):
     decodedData = json.loads(request.body.decode("utf-8"))

@@ -1,36 +1,68 @@
 console.log("Am incarcat fisierul medici.js");
 
-var actualSelectedRecord = null;
+var currentRecordClicked = null;
 
-const mediciRecords = document.querySelectorAll('.medicRecord');
-console.log(mediciRecords);
+function medicRecordClicked(event) {
+    let cellToRemove = document.querySelector('#modifyButton');
+    if (cellToRemove) {
+        currentRecordClicked.removeChild(cellToRemove);
+    }
+    let clickedRow = event.target.parentElement;
+    const newButtonElement = 
+    `<td id="modifyButton"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModifyMedic" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: 1rem;">
+        <i class="bi bi-pencil"></i>
+    </button></td>`
+    clickedRow.insertAdjacentHTML('beforeend', newButtonElement);
 
-document.getElementById("root").addEventListener("mouseleave", (event) => {
-    event.preventDefault();
-    if (actualSelectedRecord) {
-        let activeButtons = actualSelectedRecord.querySelectorAll('.context-button');
-        activeButtons.forEach((activeButton) => {
-            activeButton.classList.add('context-button-none');
-        })
-    };
-})
+    const modalWindow = document.querySelector('#modalModifyMedic');
+    const formModifieMedicForm = modalWindow.querySelector('#formModifieMedic');
+    const cancelButton = modalWindow.querySelector('#cancelButton');
+    const saveChangesButton = modalWindow.querySelector('#saveChangesButton');
 
-mediciRecords.forEach((medicRecord) => {
-    const editButton = medicRecord.querySelector('.medicEditButton');
-    const deleteButton = medicRecord.querySelector('.medicDeleteButton');
-    const acceptButton = medicRecord.querySelector('.medicAcceptButton');
+    const inputmodifieNickname = modalWindow.querySelector('#modifiedNickname');
+    const inputmodifieFirstName = modalWindow.querySelector('#modifiedFirstName');
+    const inputmodifieLastName = modalWindow.querySelector('#modifiedLastName');
+    const inputactualMedicId = modalWindow.querySelector('#actualMedicId');
 
-    medicRecord.addEventListener('click', (event) => {
-        if (actualSelectedRecord) {
-            console.log(actualSelectedRecord);
-            let activeButtons = actualSelectedRecord.querySelectorAll('.context-button');
-            activeButtons.forEach((activeButton) => {
-                activeButton.classList.add('context-button-none');
-            })
+    inputactualMedicId.value = clickedRow.querySelector(".medicId").innerHTML;
+    inputmodifieNickname.value = clickedRow.querySelector(".medicNickname").innerHTML;
+    inputmodifieFirstName.value = clickedRow.querySelector(".medicFirstName").innerHTML;
+    inputmodifieLastName.value = clickedRow.querySelector(".medicLastName").innerHTML;
+
+
+    cancelButton.addEventListener('click', () => {
+        let cellToRemove = document.querySelector('#modifyButton');
+        if (cellToRemove) {
+            clickedRow.removeChild(cellToRemove);
         }
-        editButton.classList.remove('context-button-none');
-        deleteButton.classList.remove('context-button-none');
-        actualSelectedRecord = medicRecord;
-        })
     })
 
+    saveChangesButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        formModifieMedicForm.submit();
+    })
+
+    currentRecordClicked = clickedRow;
+}
+
+const medicRecords = document.querySelectorAll('.medicRecord');
+medicRecords.forEach((medicRecord) => {
+    medicRecord.addEventListener("click", medicRecordClicked);
+});
+
+const addNewMedicButton = document.querySelector('#addNewMedicButton');
+addNewMedicButton.addEventListener('click', () => {
+    const modalWindow = document.querySelector('#modalAddNewMedic');
+    const formAddNewMedicForm = modalWindow.querySelector('#formAddNewMedic');
+    // const cancelButton = modalWindow.querySelector('#cancelNewButton');
+    const saveNewButton = modalWindow.querySelector('#saveNewButton');
+
+    // const inputNewNickname = modalWindow.querySelector('#newNickname');
+    // const inputNewFirstName = modalWindow.querySelector('#newFirstName');
+    // const inputNewLastName = modalWindow.querySelector('#newFirstName');
+
+    saveNewButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        formAddNewMedicForm.submit();
+    })
+})

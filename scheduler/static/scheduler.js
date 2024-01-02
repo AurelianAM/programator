@@ -83,13 +83,13 @@ function handleDragOver(event) {
   event.preventDefault();
   targetElement = event.target;
   if (targetElement.classList.contains('tdCell')) {
-    targetElement.classList.add('highlight');
+    targetElement.classList.add('bg-primary');
   }
 }
 
 function handleDragLeave(event) {
   event.preventDefault();
-  event.target.classList.remove('highlight');
+  event.target.classList.remove('bg-primary');
 }
 function handleDrop(event) {
   event.preventDefault();
@@ -103,7 +103,7 @@ function handleDrop(event) {
   } else {
     currentElement.innerHTML = draggedElement.innerHTML;
   }
-  event.target.classList.remove('highlight');
+  event.target.classList.remove('bg-primary');
 
   if (currentElement.innerHTML.trim() !== '') {
     currentElement.draggable = true;
@@ -185,7 +185,6 @@ function saveButtonClicked(params) {
 
 // SAVE button management
 const saveButton = document.getElementById('saveButton');
-saveButton.display = 'visible';
 saveButton.addEventListener('click', saveButtonClicked);
 
 // add listener for modifying #end_date

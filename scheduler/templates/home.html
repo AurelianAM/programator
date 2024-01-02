@@ -1,55 +1,66 @@
 {% extends "base.html" %}
 
-{% block styles %}
+{% comment %} {% block styles %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="{% static 'home.css' %}">
-{% endblock styles %}
+{% endblock styles %} {% endcomment %}
 
 {% block content %}
-<h1>Status: {{ status }}</h1>
-<div class="page-buttons">
-    <form action="" id="dates" class="methodClass" method="post">
-        {% csrf_token %}
-        <input type="date" name="start" id="start-date" value="{{ startDate }}">
-        <input type="date" name="end" id="end-date" value="{{ endDate }}">
-        <!-- <button id="printButton" class="button" disabled>Print</button> -->
-    </form>
-    <button id="saveButton" class="button" type="button" disabled display="none">Save</button>
+<div class="container-fluid">
+    <div class="btn-group page-buttons">
+        <form action="" id="dates" class="methodClass" method="post">
+            {% csrf_token %}
+            <input type="date" name="start" id="start-date" class="btn btn-primary" value="{{ startDate }}">
+            <input type="date" name="end" id="end-date" class="btn btn-primary" value="{{ endDate }}">
+            <!-- <button id="printButton" class="button" disabled>Print</button> -->
+        </form>
+    </div>
+    <button id="saveButton" class="btn btn-primary button" type="button" data-bs-toggle="collapse" data-bs-target="#contentId" aria-expanded="false" aria-controls="contentId" disabled>Save</button>
 </div>
 
 <div id="root">
-    <section id="tableSection">
-        {% block tableTitle %}
-        <div id="tableTitle">
-            <div id="mainTitle" class="titles">TABEL MEDICI</div>
-            <div id="subTitle" class="titles"><span id="month"></span> - <span id="year"></span></div>
+    <div class="container-fluid">
+        <div class="row justify-content-start align-items-start gx-2">
+            <div class="col-sm-10">
+                {% block tableTitle %}
+                <div id="tableTitle">
+                    <div id="mainTitle" class="h2">TABEL MEDICI</div>
+                    <div id="subTitle" class="titles"><span id="month"></span> - <span id="year"></span></div>
+                </div>
+                {% endblock tableTitle %}
+                <div id="tableSection" class="table-responsive-sm">
+                    <table id="table" class="table table-bordered table-hover text-center scheduler">
+                        <thead>
+                            <tr id="rowTh">
+                                <th id="thDate" scope="col">Data</th>
+                                <th id="thTura1" scope="col"><div class="thtura">Tura 1</div><div class="thtime">08:00 - 20:00</div></th>
+                                <th id="thTura2" scope="col"><div class="thtura">Tura 2</div><div class="thtime">20:00 - 08:00</div></th>
+                                <th id="thTura3" scope="col">Elicopter</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for key, record in scheduler.items %}
+                            <tr id="row${day}" class="trRow">
+                                <td scope="row" id="tdDate-{{ key }}" class="tdCellDate">{{ key }}</td>
+                                <td id="tdTura1-{{ key }}" class="tdCell" draggable="true">{{ record.tura1 }}</td>
+                                <td id="tdTura2-{{ key }}" class="tdCell" draggable="true">{{ record.tura2 }}</td>
+                                <td id="tdTura3-{{ key }}" class="tdCell" draggable="true">{{ record.tura3 }}</td>
+                            </tr>
+                        {% endfor %}                            
+                        </tbody>
+                    </table>
+            
+                </div>
+            </div>
+            {% block cardsSection %}
+
+            {% endblock cardsSection %}
         </div>
-        {% endblock tableTitle %}
-        <table id="table" class="scheduler">
-            <tr id="rowTh">
-                <th id="thDate" class="thCell">Data</th>
-                <th id="thTura1" class="thCell"><div class="thtura">Tura 1</div><div class="thtime">08:00 - 20:00</div></th>
-                <th id="thTura2" class="thCell"><div class="thtura">Tura 2</div><div class="thtime">20:00 - 08:00</div></th>
-                <th id="thTura3" class="thCell">Elicopter</th>
-            </tr>
-            {% for key, record in scheduler.items %}
-                <tr id="row${day}" class="trRow">
-                    <td id="tdDate-{{ key }}" class="tdCellDate">{{ key }}</td>
-                    <td id="tdTura1-{{ key }}" class="tdCell" draggable="true">{{ record.tura1 }}</td>
-                    <td id="tdTura2-{{ key }}" class="tdCell" draggable="true">{{ record.tura2 }}</td>
-                    <td id="tdTura3-{{ key }}" class="tdCell" draggable="true">{{ record.tura3 }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    </section>
-
-    {% block cardsSection %}
-    
-    {% endblock cardsSection %}
-
+    </div>
 </div>
 {% endblock content %}
+
 
 {% block scripts %}
     {% load static %}

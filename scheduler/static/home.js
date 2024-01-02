@@ -15,7 +15,7 @@ function setEndDate() {
 
 
 console.log("Am incarcat fisierul home.js");
-
+const saveButton = document.getElementById('saveButton');
 
 const dates = document.getElementById('dates');
 const startDateInput = document.getElementById('start-date');
