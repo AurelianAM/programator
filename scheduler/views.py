@@ -7,15 +7,40 @@ import calendar
 import json
 
 # Create your views here.
-
+RO_MONTHS = {
+    1 : "Ianuarie",
+    2 : "Februarie",
+    3 : "Martie",
+    4 : "Aprilie",
+    5 : "Mai",
+    6 : "Iunie",
+    7 : "Iulie",
+    8 : "August",
+    9 : "Septembrie",
+    10 : "Octombrie",
+    11 : "Noiembrie",
+    12 : "Decembrie"
+}
+RO_WEEKDAYS = {
+    0 : "Luni",
+    1 : "Marti",
+    2 : "Miercuri",
+    3 : "Joi",
+    4 : "Vineri",
+    5 : "Sambata",
+    6 : "Duminica"
+}
 
 def homeView(request):
     context = {}
     if request.method == "GET":
-        context.update(handleDates(request))
+        print(request.GET)
+        context.update(handleDates(request))        
     if request.method == "POST":
+        print(request.__iter__())
         context.update(handleScheduler(request))
     return render(request, 'home.html', context=context)
+    
 
 def schedulerView(request):
     context = {}
@@ -86,9 +111,11 @@ def getMedic(nickname):
         return None   
 
 def handleDates(request):
-    startDate = f"{datetime.now().year}-{datetime.now().month}-{1:02d}"
-    endDate = f"{datetime.now().year}-{datetime.now().month}-{calendar.monthrange(datetime.now().year, datetime.now().month)[1]:02d}"
-    return {"status" : "ok GET - handle Dates", "startDate" : startDate, "endDate" : endDate}
+    startDate = f"{datetime.now().year}-{datetime.now().month:02d}-{1:02d}"
+    endDate = f"{datetime.now().year}-{datetime.now().month:02d}-{calendar.monthrange(datetime.now().year, datetime.now().month)[1]:02d}"
+    aDate = datetime.strptime(startDate, '%Y-%m-%d')+timedelta(days=3)
+    ro_month = RO_MONTHS[aDate.month]
+    return {"status" : "ok GET - handle Dates", "startDate" : startDate, "endDate" : endDate, "month" : ro_month, "year" : aDate.year}
 
 def handleScheduler(request):
     scheduler = {}

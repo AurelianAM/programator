@@ -44,11 +44,12 @@ body {
     }
     /* Add additional styling for your content here */
 
-    .page-buttons {
+
+    #buttonsSection {
         display: none;
     }
 
-    #root *{
+    #actualTableArea *{
       /* Define styles for your content, e.g., font, margin, padding, etc. */
       visibility: visible;
     }

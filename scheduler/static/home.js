@@ -15,17 +15,20 @@ function setEndDate() {
 
 
 console.log("Am incarcat fisierul home.js");
-const saveButton = document.getElementById('saveButton');
+const printButton = document.getElementById('printButton');
+
 
 const dates = document.getElementById('dates');
 const startDateInput = document.getElementById('start-date');
 const endDateInput = document.getElementById('end-date');
 
 
-endDateInput.addEventListener('input', function () {
+endDateInput.addEventListener('input', function (event) {
+    event.preventDefault();
     dates.submit();
-    console.log("Submited " + dates)
+    console.log("Submited " + dates);
 })
+
 
 
 // startDateInput.value = setStartDate().toISOString().split('T')[0];

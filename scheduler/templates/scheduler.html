@@ -1,9 +1,8 @@
 {% extends "home.html" %}
 
-{% comment %} {% block styles %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-{% endblock styles %} {% endcomment %}
+{% block home-specificButtons %}
+    <button id="saveButton" class="btn btn-primary button" type="button" data-bs-toggle="collapse" data-bs-target="#contentId" aria-expanded="false" aria-controls="contentId" disabled>Save</button>
+{% endblock home-specificButtons %}
 
 {% block tableTitle %}
 {% endblock tableTitle %}
