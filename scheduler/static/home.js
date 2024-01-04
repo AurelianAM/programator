@@ -13,9 +13,13 @@ function setEndDate() {
     return lastDayOfThisMonth;
 }
 
+function printElement(element) {
+    window.print();
+}
 
 console.log("Am incarcat fisierul home.js");
 const printButton = document.getElementById('printButton');
+printButton.addEventListener('click', printElement);
 
 
 const dates = document.getElementById('dates');
@@ -29,7 +33,10 @@ endDateInput.addEventListener('input', function (event) {
     console.log("Submited " + dates);
 })
 
-
+// const table = document.getElementById('table');
+// table.onchange = function (event) {
+//     console.log("changed");
+// }
 
 // startDateInput.value = setStartDate().toISOString().split('T')[0];
 // endDateInput.value = setEndDate().toISOString().split('T')[0];

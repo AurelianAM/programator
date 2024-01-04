@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
-{% comment %} {% block styles %}
+{% block styles %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="{% static 'home.css' %}">
-{% endblock styles %} {% endcomment %}
+{% endblock styles %}
 
 {% block content %}
+<picture id="antetSpital" class="d-none d-print-block" visibility="hidden">
+    {% load static %}
+    <img src="{% static './img/antet-spital.png' %}" alt="antet-spital">
+</picture>
+
 <div id="buttonsSection" class="container-fluid">
     <div class="btn-group page-buttons">
         <form action="" id="dates" class="methodClass" method="post">
@@ -24,7 +28,7 @@
 <div id="root">
     <div class="container-fluid">
         <div class="row justify-content-start align-items-start gx-2">
-            <div id="actualTableArea" class="col-sm-10">
+            <div id="actualTableArea" class="col-sm-10 d-print-block">
                 {% block tableTitle %}
                 <div id="tableTitle">
                     <div id="mainTitle" class="h2">TABEL MEDICI</div>
@@ -43,7 +47,13 @@
                         </thead>
                         <tbody>
                         {% for key, record in scheduler.items %}
-                            <tr id="row${day}" class="trRow">
+                            <tr id="row${day}" 
+                            {% if record.weekend %}
+                                class="weekend trRow text-bg-info"
+                            {% else %}
+                                class="trRow"
+                            {% endif %}
+                            >
                                 <td scope="row" id="tdDate-{{ key }}" class="tdCellDate">{{ key }}</td>
                                 <td id="tdTura1-{{ key }}" class="tdCell" draggable="true">{{ record.tura1 }}</td>
                                 <td id="tdTura2-{{ key }}" class="tdCell" draggable="true">{{ record.tura2 }}</td>

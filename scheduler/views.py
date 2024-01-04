@@ -127,6 +127,8 @@ def handleScheduler(request):
                 for x in range(0, (end - start).days+1)]
     for date in dates:
         strDate = date.strftime("%d-%m-%Y")
+        # verify if date is weekend
+        weekend = (date.weekday() == 5) or (date.weekday() == 6)
         try:
             record = Scheduler.objects.get(date=date)
             t1 = record.tura1 if record.tura1 else ''
@@ -135,13 +137,17 @@ def handleScheduler(request):
             scheduler[strDate] = {
                 'tura1': t1,
                 'tura2': t2,
-                'tura3': t3}
+                'tura3': t3,
+                'weekend': weekend}
         except Scheduler.DoesNotExist:
             scheduler[strDate] = {
                 'tura1': '',
                 'tura2': '',
-                'tura3': ''}
-    return {"scheduler" : scheduler, "status" : "ok POST - handle Scheduler", "startDate" : startDate, "endDate" : endDate}
+                'tura3': '',
+                'weekend': weekend}
+    aDate = datetime.strptime(startDate, '%Y-%m-%d')+timedelta(days=3)
+    ro_month = RO_MONTHS[aDate.month]
+    return {"scheduler" : scheduler, "status" : "ok POST - handle Scheduler", "startDate" : startDate, "endDate" : endDate, "month" : ro_month, "year" : aDate.year}
 
 
 def handleMedicList(request):

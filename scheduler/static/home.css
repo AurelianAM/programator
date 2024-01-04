@@ -30,67 +30,88 @@ body {
 
 
 @media print {
+    /* body {
+        all: initial !important;
+    } */
     body *{
-      margin: 0;
-      padding: 0;
-      visibility: hidden;
+      margin: 0 !important;
+      padding: 0 !important;
+      visibility: hidden !important;
+      all: none !important;
     }
     @page {
-      size: A4;
-      margin: 0;
-      align-items: center;
+      size: A4 !important;
+      margin: 0 5mm 0 5mm;
+      align-items: center ;
       justify-content: baseline;
-      align-self: center;
     }
     /* Add additional styling for your content here */
 
 
     #buttonsSection {
-        display: none;
+        display: none !important;
     }
 
-    #actualTableArea *{
-      /* Define styles for your content, e.g., font, margin, padding, etc. */
-      visibility: visible;
+    #actualTableArea * {
+      visibility: visible !important;
     }
 
+    #antetSpital * {
+        visibility: visible !important;
+    }
+    #antetSpital {
+        margin-top: 0 !important;
+        margin-bottom: 1rem !important;
+    }
+
+    #actualTableArea {
+        margin-left: 25mm !important;
+    }
+
+    #tableTitle {
+        padding: 1rem 0 !important;
+        margin: 1rem 0 !important;
+    }
 
     table * {
-        border: 1px solid black;
+        border: 1px solid black !important;
     }
 
     table {
-        border-collapse: collapse;
+        border-collapse: collapse !important;
     }
 
     td, th {
-        padding: 0.2rem 1rem;
-        min-width: 40mm;
+        padding: 0.2rem 1rem !important;
+        width: 40mm !important;
     }
 
     th {
         font-size: 1.25rem;
-        font-weight: bolder;
-        background-color: #fff;
+        font-weight: bolder !important;
+        background-color: #fff !important;
+        text-align: center !important;
+        justify-content: center !important;
+        vertical-align: middle !important;
     }
 
     td {
-        font-size: 1rem;
+        font-size: 1rem !important;
     }
 
     .weekend {
-        background-color: #c3c3c3;
-        font-weight: bold;
+        background-color: #918787 !important;
+        font-weight: bold !important;
     }
 
     .thtura, .thtime {
-        border: none;
+        border: none !important;
     }
     .thtura {
-        font-size: 1.25rem;
+        font-size: 1.25rem !important;
     }
     .thtime {
-        font-size: 1rem
+        font-size: 1rem !important;
     }
 
   }
