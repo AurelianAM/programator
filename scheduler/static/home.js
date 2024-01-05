@@ -27,10 +27,10 @@ const startDateInput = document.getElementById('start-date');
 const endDateInput = document.getElementById('end-date');
 
 
+
 endDateInput.addEventListener('input', function (event) {
     event.preventDefault();
     dates.submit();
-    console.log("Submited " + dates);
 })
 
 // const table = document.getElementById('table');

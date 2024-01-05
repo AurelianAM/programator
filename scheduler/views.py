@@ -36,10 +36,8 @@ RO_WEEKDAYS = {
 def homeView(request):
     context = {}
     if request.method == "GET":
-        print(request.GET)
         context.update(handleDates(request))        
     if request.method == "POST":
-        print(request.__iter__())
         context.update(handleScheduler(request))
     return render(request, 'home.html', context=context)
     
@@ -131,7 +129,7 @@ def getMedic(nickname):
 
 def handleDates(request):
     startDate = f"{datetime.now().year}-{datetime.now().month:02d}-{1:02d}"
-    endDate = f"{datetime.now().year}-{datetime.now().month:02d}-{calendar.monthrange(datetime.now().year, datetime.now().month)[1]:02d}"
+    endDate = f"{datetime.now().year}-{datetime.now().month:02d}-{calendar.monthrange(datetime.now().year, datetime.now().month)[1]-1:02d}"
     aDate = datetime.strptime(startDate, '%Y-%m-%d')+timedelta(days=3)
     ro_month = RO_MONTHS[aDate.month]
     return {"status" : "ok GET - handle Dates", "startDate" : startDate, "endDate" : endDate, "month" : ro_month, "year" : aDate.year}

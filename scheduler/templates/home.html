@@ -16,7 +16,7 @@
         <form action="" id="dates" class="methodClass" method="post">
             {% csrf_token %}
             <input type="date" name="start" id="start-date" class="btn" value="{{ startDate }}">
-            <input type="date" name="end" id="end-date" class="btn" value="">
+            <input type="date" name="end" id="end-date" class="btn" value="{{ endDate }}">
         </form>
     </div>
     {% block home-specificButtons %}
