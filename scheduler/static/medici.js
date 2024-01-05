@@ -2,6 +2,22 @@ console.log("Am incarcat fisierul medici.js");
 
 var currentRecordClicked = null;
 
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+
+
 function medicRecordClicked(event) {
     let cellToRemove = document.querySelector('#modifyButton');
     if (cellToRemove) {
@@ -9,9 +25,14 @@ function medicRecordClicked(event) {
     }
     let clickedRow = event.target.parentElement;
     const newButtonElement = 
-    `<td id="modifyButton"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModifyMedic" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: 1rem;">
-        <i class="bi bi-pencil"></i>
-    </button></td>`
+    `<td id="modifyButton">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModifyMedic" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: 1rem;">
+            <i class="bi bi-pencil"></i>
+        </button>
+        <button id="deleteMedicButton" class="btn btn-danger" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: 1rem;">
+            <i class="bi bi-trash"></i>
+        </button>
+    </td>`
     clickedRow.insertAdjacentHTML('beforeend', newButtonElement);
 
     const modalWindow = document.querySelector('#modalModifyMedic');
@@ -41,6 +62,26 @@ function medicRecordClicked(event) {
         event.preventDefault();
         formModifieMedicForm.submit();
     })
+
+    const deleteMedicButton = document.querySelector('#deleteMedicButton');
+    deleteMedicButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        let idToDelete = clickedRow.querySelector(".medicId").innerHTML;
+        console.log(idToDelete);
+        let csrftoken = getCookie('csrftoken');
+        let response = fetch("", {
+            method: 'POST',
+            body: idToDelete,
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'test/plain',
+                "X-CSRFToken": [csrftoken],
+                "action" : "delete",
+            },
+        });
+        alert(response)
+    })
+
 
     currentRecordClicked = clickedRow;
 }

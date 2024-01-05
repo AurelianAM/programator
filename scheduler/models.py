@@ -14,9 +14,9 @@ class Medic(models.Model):
 
 class Scheduler(models.Model):
     date = models.DateField(primary_key=True)
-    tura1 = models.ForeignKey(Medic, to_field='nickname', related_name='tura1', on_delete=models.CASCADE, null=True, default = "", blank=True)
-    tura2 = models.ForeignKey(Medic, to_field='nickname', related_name='tura2', on_delete=models.CASCADE, null=True, default = "", blank=True)
-    tura3 = models.ForeignKey(Medic, to_field='nickname', related_name='tura3', on_delete=models.CASCADE, null=True, default = "", blank=True)
+    tura1 = models.ForeignKey(Medic, related_name='+', on_delete=models.CASCADE, null=True, default = "", blank=True)
+    tura2 = models.ForeignKey(Medic, related_name='+', on_delete=models.CASCADE, null=True, default = "", blank=True)
+    tura3 = models.ForeignKey(Medic, related_name='+', on_delete=models.CASCADE, null=True, default = "", blank=True)
 
     def __str__(self):
         return f"{self.date}-{self.tura1}-{self.tura2}-{self.tura3}"

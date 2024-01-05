@@ -68,6 +68,8 @@ def mediciView(request):
             context.update(handleModifyMedic(request))
         elif "newNickname" in request.POST:
             context.update(handleAddNewMedic(request))
+        elif "delete" in request.headers.get('action'):
+            context.update(handleDeleteMedic(request))
         return redirect('medici')
     return render(request, "medici.html", context=context)
 
@@ -79,7 +81,8 @@ def handleAddNewMedic(request):
     try:
         newMedic.save()
         return {"status" : "Medic added successfully"}
-    except Medic.unique_error_message:
+    except Exception as e:
+        print(e)
         return {"status" : "Medic with provided nickname already exists"}
 
 def handleModifyMedic(request):
@@ -87,16 +90,29 @@ def handleModifyMedic(request):
     modifiedNickname = request.POST.get("modifiedNickname")
     modifiedFirstName = request.POST.get("modifiedFirstName")
     modifiedLastName = request.POST.get("modifiedLastName")
+    # print("Id-ul medicului care trebuie modificat: ", id)
 
     medic = Medic.objects.get(id=id)
     try:
+        print(medic)
         medic.nickname = modifiedNickname
         medic.firstName = modifiedFirstName
         medic.lastName = modifiedLastName
         medic.save()
         return {"status" : "Medic modified successfully"}
-    except Medic.unique_error_message:
+    except Exception as e: # Medic.unique_error_message:
+        print(e)
         return {"status" : "Medic with provided nickname already exists"}
+
+def handleDeleteMedic(request):
+    id = int(request.body.decode("utf-8"))
+    try:
+        medic = Medic.objects.get(id=id)
+        medic.delete()
+        return {"status" : "Medic deleted successfully"}
+    except Exception as e:
+        print(e)
+        return {"status" : "Error deleting medic"}
 
 def saveScheduler(request):
     decodedData = json.loads(request.body.decode("utf-8"))
