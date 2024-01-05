@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% load static %}
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <h2>Login</h2>
+        {% for field in form %}
+            <p>
+                {% if field.errors %}
+                    <ul>
+                        {% for error in field.errors %}
+                            <li class="text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {{ field.label_tag }} {{ field }}
+            </p>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary" value="Login">Login</button>
+        <p>Don't have an account?
+            <a class="btn btn-secondary" href="{% url 'myRegister' %}">Register</a>
+        </p>
+    </form>
+{% endblock content %}

@@ -15,12 +15,12 @@
     <div class="btn-group page-buttons">
         <form action="" id="dates" class="methodClass" method="post">
             {% csrf_token %}
-            <input type="date" name="start" id="start-date" class="btn btn-primary" value="{{ startDate }}">
-            <input type="date" name="end" id="end-date" class="btn btn-primary" value="">
+            <input type="date" name="start" id="start-date" class="btn" value="{{ startDate }}">
+            <input type="date" name="end" id="end-date" class="btn" value="">
         </form>
     </div>
     {% block home-specificButtons %}
-        <button id="printButton" class="btn btn-primary button" type="button" data-bs-toggle="collapse" data-bs-target="#contentId" aria-expanded="false" aria-controls="contentId">Print</button>
+        <button id="printButton" class="btn button" type="button" data-bs-toggle="collapse" data-bs-target="#contentId" aria-expanded="false" aria-controls="contentId">Print</button>
     {% endblock home-specificButtons %}
     
 </div>

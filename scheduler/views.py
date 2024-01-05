@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Scheduler, Medic
 
@@ -41,7 +43,7 @@ def homeView(request):
         context.update(handleScheduler(request))
     return render(request, 'home.html', context=context)
     
-
+@login_required
 def schedulerView(request):
     context = {}
     if request.method == "GET":
@@ -56,6 +58,7 @@ def schedulerView(request):
             context.update(handleMedicList(request))
     return render(request, "scheduler.html", context)
 
+@login_required
 def mediciView(request):
     context = {}
     if request.method == "GET":
