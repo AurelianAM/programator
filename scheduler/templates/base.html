@@ -30,22 +30,22 @@
         <div class = "collapse navbar-collapse" id = "collapsibleNavId">
           <ul class="navbar-nav me-auto mt-2 mt-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" href="{% url 'home' %}" aria-current="page"
-                  >Home <span class="visually-hidden">(current)</span></a>
+                <a {% if request.path_info == "/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'home' %}" aria-current="page"
+                  >Home </a>
               </li>
             {% if request.user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'scheduler' %}">Scheduler</a>
+                <a {% if request.path_info == "/scheduler/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'scheduler' %}">Scheduler</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="{% url 'medici' %}">Medici</a>
+                  <a {% if request.path_info == "/medici/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'medici' %}">Medici</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'myLogout' %}">Logout</a>
+                <a class = "nav-link" href="{% url 'myLogout' %}">Logout</a>
             </li>
             {% else %}
             <li class="nav-item">
-                <a class="nav-link active" href="{% url 'myLogin' %}">Login</a>
+                <a {% if request.path_info == "/auth/login/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'myLogin' %}">Login</a>
             </li>
             {% endif %}
           </ul>
@@ -54,8 +54,7 @@
     </header>
     <div class="collapse" id="contentId"></div>
 
-    
-        
+
     <div id="mainSection" class="container-fluid">{% block content %}{% endblock content %}</div>
     
     <footer id="footer">{% block footer %}{% endblock footer %}</footer>
