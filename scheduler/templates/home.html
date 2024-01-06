@@ -9,6 +9,7 @@
 <picture id="antetSpital" class="d-none d-print-block" visibility="hidden">
     {% load static %}
     <img src="{% static './img/antet-spital.png' %}" alt="antet-spital">
+    <div class="d-flex justify-content-between mt-4"><span class="left">Nr. ________/__________</span><span class="right">APROBAT DIRECTOR MEDICAL</span></div>
 </picture>
 
 <div id="buttonsSection" class="container-fluid">
@@ -31,8 +32,8 @@
             <div id="actualTableArea" class="col-sm-10 d-print-block">
                 {% block tableTitle %}
                 <div id="tableTitle">
-                    <div id="mainTitle" class="h2">TABEL MEDICI</div>
-                    <div id="subTitle" class="titles"><span id="month"></span>{{ month }} - {{ year }} <span id="year"></span></div>
+                    <div id="mainTitle" class="h2">GARZI AFERENTE LUNII <span id="month"></span>{{ month }} - {{ year }} <span id="year"></span></div>
+                    <div id="subTitle" class="titles">Sectia CPU</div>
                 </div>
                 {% endblock tableTitle %}
                 <div id="tableSection" class="table-responsive-sm">
