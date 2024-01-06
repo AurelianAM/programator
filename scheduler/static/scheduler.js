@@ -1,7 +1,7 @@
 function updateAndFormat() {
   // resetTableRows();
   updateDraggable();
-  formatWeekends()
+  // formatWeekends(); // l-am sters pentru ca are logica si din Django
   addEventsOnCardsAndCells();
 }
 
@@ -13,10 +13,37 @@ function isWeekend(dateString) {
   return day === 0 || day === 6;
 }
 
+var alreadySelected = null;
+function handleClickSwap(event) {
+  let currentClicked = event.target;
+  currentClicked.classList.add('bg-secondary');
+  if (alreadySelected) {
+    // console.log("already selected");
+
+    if (alreadySelected.classList.contains('tdCell') && currentClicked.classList.contains('tdCell')) {
+      let temp = alreadySelected.innerHTML;
+      alreadySelected.innerHTML = currentClicked.innerHTML;
+      currentClicked.innerHTML = temp;
+    }
+    if (alreadySelected.classList.contains('card') && currentClicked.classList.contains('tdCell')) {
+      currentClicked.innerHTML = alreadySelected.innerHTML;
+    }
+
+    alreadySelected.classList.remove('bg-secondary');
+    currentClicked.classList.remove('bg-secondary');
+    alreadySelected = null;
+    saveButton.disabled = false;
+  } else {
+    // console.log("first click");
+    alreadySelected = currentClicked;
+  }
+}
+
 function addEventsOnCardsAndCells() {
   const cards = document.querySelectorAll('.card');
   cards.forEach((card) => {
     card.addEventListener('dragstart', handleDragStart);
+    card.addEventListener('click', handleClickSwap);
   })
   const tdCells = document.querySelectorAll('.tdCell');
   tdCells.forEach((tdCell) => {
@@ -26,6 +53,7 @@ function addEventsOnCardsAndCells() {
     tdCell.addEventListener('dragover', handleDragOver);
     tdCell.addEventListener('dragleave', handleDragLeave);
     tdCell.addEventListener('drop', handleDrop);
+    tdCell.addEventListener('click', handleClickSwap);
   })
 }
 
@@ -178,6 +206,7 @@ function saveButtonClicked(params) {
         "action" : "save",
     },
   });
+  saveButton.disabled = true;
 }
 
 
