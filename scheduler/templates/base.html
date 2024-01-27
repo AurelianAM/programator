@@ -30,19 +30,25 @@
         <div class = "collapse navbar-collapse" id = "collapsibleNavId">
           <ul class="navbar-nav me-auto mt-2 mt-lg-0">
               <li class="nav-item">
-                <a {% if request.path_info == "/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'home' %}" aria-current="page"
-                  >Home </a>
+                <a 
+                  {% if request.path_info == "/" %} class = "nav-link active" {% else %}  class = "nav-link" {% endif %}
+                  {% if request.user.is_authenticated %} href="{% url 'home' %}" {% else %} href="{% url 'myLogin' %}" {% endif %}
+                  aria-current="page">Home
+                  
+                </a>
               </li>
             {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                <a {% if request.path_info == "/scheduler/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'scheduler' %}">Scheduler</a>
+              {% if request.user.is_staff %}
+                <li class="nav-item">
+                  <a {% if request.path_info == "/scheduler/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'scheduler' %}">Scheduler</a>
+                </li>
+                <li class="nav-item">
+                    <a {% if request.path_info == "/medici/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'medici' %}">Medici</a>
+                </li>
+              {% endif %}
+                <li class="nav-item">
+                  <a class = "nav-link" href="{% url 'myLogout' %}">Logout</a>
               </li>
-              <li class="nav-item">
-                  <a {% if request.path_info == "/medici/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'medici' %}">Medici</a>
-              </li>
-              <li class="nav-item">
-                <a class = "nav-link" href="{% url 'myLogout' %}">Logout</a>
-            </li>
             {% else %}
             <li class="nav-item">
                 <a {% if request.path_info == "/auth/login/" %} class = "nav-link active"{% else %} class = "nav-link" {% endif %} href="{% url 'myLogin' %}">Login</a>

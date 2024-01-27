@@ -39,7 +39,10 @@ def homeView(request):
         context.update(handleDates(request))        
     if request.method == "POST":
         context.update(handleScheduler(request))
-    return render(request, 'home.html', context=context)
+    if request.user.is_authenticated:
+        return render(request, 'home.html', context=context)
+    else:
+        return redirect('myLogin')
     
 @login_required
 def schedulerView(request):
