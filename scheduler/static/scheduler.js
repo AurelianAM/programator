@@ -5,6 +5,27 @@ function updateAndFormat() {
   addEventsOnCardsAndCells();
 }
 
+function cleanElement(element) {
+    let badge = element.querySelector("#deleteBadge");
+    if (badge) {
+    badge.remove();
+    }
+  return element;
+}
+function addBadge(element) {
+  let badgeElement = document.createElement("button");
+  badgeElement.innerHTML = '<i class="bi bi-trash"></i>';
+  badgeElement.classList.add("btn", "btn-danger", "btn-sm");
+  badgeElement.id = "deleteBadge";
+  if (element.innerHTML != '' && element.classList.contains('tdCell')) {
+    element.appendChild(badgeElement);
+    let buttonDeleteButton = element.querySelector("#deleteBadge");
+    buttonDeleteButton.addEventListener("click", () => {
+      element.innerHTML = '';
+    })
+  }
+  return element;
+}
 
 function isWeekend(dateString) {
   var parts = dateString.split("/");
@@ -16,21 +37,23 @@ function isWeekend(dateString) {
 var alreadySelected = null;
 function handleClickSwap(event) {
   let currentClicked = event.target;
+  currentClicked = addBadge(currentClicked);
   currentClicked.classList.add('bg-secondary');
   if (alreadySelected) {
     // console.log("already selected");
-
+    alreadySelected = cleanElement(alreadySelected);
     if (alreadySelected.classList.contains('tdCell') && currentClicked.classList.contains('tdCell')) {
-      let temp = alreadySelected.innerHTML;
-      alreadySelected.innerHTML = currentClicked.innerHTML;
+      let temp = cleanElement(alreadySelected).innerHTML;
+      alreadySelected.innerHTML = cleanElement(currentClicked).innerHTML;
       currentClicked.innerHTML = temp;
     }
     if (alreadySelected.classList.contains('card') && currentClicked.classList.contains('tdCell')) {
-      currentClicked.innerHTML = alreadySelected.innerHTML;
+      currentClicked.innerHTML = cleanElement(alreadySelected).innerHTML;
     }
 
     alreadySelected.classList.remove('bg-secondary');
     currentClicked.classList.remove('bg-secondary');
+    currentClicked = cleanElement(currentClicked);
     alreadySelected = null;
     saveButton.disabled = false;
   } else {
