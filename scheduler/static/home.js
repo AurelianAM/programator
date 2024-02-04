@@ -17,6 +17,37 @@ function printElement(element) {
     window.print();
 }
 
+function getWeekDay(strDate) {
+    day = new Date(strDate).getDay();
+    switch (day) {
+        case 0:
+            return 'Du';
+        case 1:
+            return 'Lu';
+        case 2:
+            return 'Ma';
+        case 3:
+            return 'Mi';
+        case 4:
+            return 'Jo';
+        case 5:
+            return 'Vi';
+        case 6:
+            return 'Sa';
+    }
+}
+
+function setWeekDays(params) {
+    let allDates = document.querySelectorAll('.tdCellDate');
+    for (let index = 0; index < allDates.length; index++) {
+        strDate = allDates[index].innerHTML;
+        allDates[index].innerHTML = strDate + '  ' + getWeekDay(strDate);
+
+    }
+}
+
+
+
 console.log("Am incarcat fisierul home.js");
 const printButton = document.getElementById('printButton');
 printButton.addEventListener('click', printElement);
@@ -32,6 +63,13 @@ endDateInput.addEventListener('input', function (event) {
     event.preventDefault();
     dates.submit();
 })
+
+
+// $(document).ready(function () {
+//     setWeekDays();
+// })
+
+
 
 // const table = document.getElementById('table');
 // table.onchange = function (event) {

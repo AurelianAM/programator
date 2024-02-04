@@ -3,15 +3,46 @@ function updateAndFormat() {
   updateDraggable();
   // formatWeekends(); // l-am sters pentru ca are logica si din Django
   addEventsOnCardsAndCells();
+  updateCounters();
+}
+
+function getOnlyNickname(element) {
+ let nickname = element.textContent.trim().split(" ")[0];
+ return nickname;
+}
+function resetCounters(params) {
+  let counters = document.querySelectorAll(".counter");
+  counters.forEach((counter) => {
+    counter.innerHTML = 0;
+  })
+}
+
+function updateOneCounter(nickname) {
+  if (nickname.length > 0) {
+    let nickNameCounter = document.getElementById(`counter-${nickname}`);
+    let counterValue = parseInt(nickNameCounter.innerHTML, 10);
+    counterValue++;
+    nickNameCounter.innerHTML = counterValue;
+  }
+}
+
+function updateCounters() {
+  resetCounters();
+  let tdCells = document.querySelectorAll(".tdCell");
+  tdCells.forEach((tdCell) => {
+    nickname = tdCell.innerHTML.trim();
+    updateOneCounter(nickname);
+  })
 }
 
 function cleanElement(element) {
     let badge = element.querySelector("#deleteBadge");
     if (badge) {
-    badge.remove();
+      badge.remove();
     }
   return element;
 }
+
 function addBadge(element) {
   let badgeElement = document.createElement("button");
   badgeElement.innerHTML = '<i class="bi bi-trash"></i>';
@@ -36,6 +67,10 @@ function isWeekend(dateString) {
 
 var alreadySelected = null;
 function handleClickSwap(event) {
+  event.stopImmediatePropagation();
+  event.preventDefault();
+  event.stopPropagation();
+  console.log(getOnlyNickname(event.target));
   let currentClicked = event.target;
   currentClicked = addBadge(currentClicked);
   currentClicked.classList.add('bg-secondary');
@@ -48,7 +83,8 @@ function handleClickSwap(event) {
       currentClicked.innerHTML = temp;
     }
     if (alreadySelected.classList.contains('card') && currentClicked.classList.contains('tdCell')) {
-      currentClicked.innerHTML = cleanElement(alreadySelected).innerHTML;
+      currentClicked.innerHTML = getOnlyNickname(alreadySelected);
+      console.log('Testez aici')
     }
 
     alreadySelected.classList.remove('bg-secondary');
@@ -60,6 +96,7 @@ function handleClickSwap(event) {
     // console.log("first click");
     alreadySelected = currentClicked;
   }
+  updateCounters();
 }
 
 function addEventsOnCardsAndCells() {
@@ -87,6 +124,7 @@ function resetTableRows() {
       row.remove();
     });
   }
+  updateCounters();
 }
 
 
@@ -152,7 +190,7 @@ function handleDrop(event) {
     currentElement.innerHTML = draggedElement.innerHTML;
     draggedElement.innerHTML = saveValue;
   } else {
-    currentElement.innerHTML = draggedElement.innerHTML;
+    currentElement.innerHTML = getOnlyNickname(draggedElement);
   }
   event.target.classList.remove('bg-primary');
 
@@ -176,6 +214,7 @@ function handleDrop(event) {
     draggedElement.classList.remove('draggable');
   }
   saveButton.disabled = false;
+  updateCounters();
 }
 
 function getCookie(name) {
