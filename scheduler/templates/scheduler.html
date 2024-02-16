@@ -11,10 +11,19 @@
     <div class="col-sm-2 sticky-top">
         <ul id="cardsSection" class="nav nav-pills nav-stacked">
             {% for medic in medicList %}
-                <li id="medic{{ medic.id }}" class="col-12 bg-primary text-white btn btn-primary btn-sm mb-1 medic card draggable" draggable="true">
+                {% comment %} <li id="medic{{ medic.id }}" class="col-12 bg-primary text-white btn btn-primary btn-sm mb-1 medic card draggable" draggable="true">
                     <!-- <span disabled id="medic-{{ medic.nickname }}" class="card-nickname unselectable">{{ medic.nickname }}</span> -->
                     {{ medic.nickname }}
-                    <span id="counter-{{ medic.nickname }}" class="counter position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span></li>
+                    <span id="counter-{{ medic.nickname }}" class="counter position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span></li> {% endcomment %}
+                <div id="medic{{ medic.id }}" class="card border-info mb-3 medic draggable" style="max-width: 10rem; width: 10rem;">
+                    <div style="pointer-events: none;">
+                        {% comment %} <div style="z-index: 11" class="card-header"></div> {% endcomment %}
+                        <div style="user-select: none; pointer-events: none;" class="card-body">
+                            <h6 style="user-select: none; pointer-events: none;" id="medic-{{ medic.nickname }}" class="card-title card-nickname">{{ medic.nickname }}</h6>
+                            <p style="user-select: none; pointer-events: none;" class="card-text">Ture: <span id="counter-{{ medic.nickname }}" class="counter">0</span> </p>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         </ul>
     </div>
