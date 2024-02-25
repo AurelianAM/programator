@@ -63,6 +63,14 @@ body {
         margin-top: 0 !important;
         margin-bottom: 1rem !important;
     }
+    #print-footer * {
+        visibility: visible !important;
+    }
+    #print-footer {
+        margin-top: 1rem !important;
+        margin-bottom: 0 !important;
+    }
+
 
     #actualTableArea {
         margin-left: 25mm !important;
